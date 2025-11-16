@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel Booking Prototype</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #e3f2fd, #fce4ec);
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #333;
+            font-size: 32px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            background: #fff;
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .hotel {
+            padding: 12px 18px;
+            background: #f7f9fc;
+            border-radius: 12px;
+            margin: 8px 0;
+            font-size: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .hotel:hover {
+            transform: scale(1.02);
+            background: #eef4ff;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #42a5f5, #7e57c2);
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #1e88e5, #673ab7);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<h1>Hotel Booking System Prototype</h1>
+
+<!-- CLIENT-SERVER STYLE -->
+<div class="section" id="clientServer">
+    <h2>Client-Server Architecture</h2>
+    <p>The client fetches hotel data from a simulated server.</p>
+
+    <div id="serverHotels"></div>
+    <button onclick="fetchHotelsFromServer()">Fetch Hotels</button>
+</div>
+
+<!-- MVC STYLE -->
+<div class="section" id="mvc">
+    <h2>MVC Architecture</h2>
+    <p>Model-View-Controller separates logic, data, and UI clearly.</p>
+
+    <div id="mvcHotels"></div>
+    <button onclick="controller.loadHotels()">Load Hotels</button>
+</div>
+
+<script>
+/************* CLIENT-SERVER PROTOTYPE *************/
+const serverData = [
+    { name: "Ocean View Resort", price: 120 },
+    { name: "Mountain Inn", price: 80 },
+    { name: "City Central Hotel", price: 150 }
+];
+
+function fetchHotelsFromServer() {
+    const hotelDiv = document.getElementById("serverHotels");
+    hotelDiv.innerHTML = "";
+
+    serverData.forEach(hotel => {
+        const div = document.createElement("div");
+        div.classList.add("hotel");
+        div.textContent = `${hotel.name} — $${hotel.price} per night`;
+        hotelDiv.appendChild(div);
+    });
+}
+
+/************* MVC PROTOTYPE *************/
+// MODEL
+const model = {
+    hotels: [
+        { name: "Grand Palace", price: 200 },
+        { name: "Sunny Side Inn", price: 90 },
+        { name: "Lakeview Hotel", price: 130 }
+    ],
+    getHotels: function() { return this.hotels; }
+};
+
+// VIEW
+const view = {
+    render: function(hotels) {
+        const div = document.getElementById("mvcHotels");
+        div.innerHTML = "";
+        hotels.forEach(hotel => {
+            const hotelDiv = document.createElement("div");
+            hotelDiv.classList.add("hotel");
+            hotelDiv.textContent = `${hotel.name} — $${hotel.price} per night`;
+            div.appendChild(hotelDiv);
+        });
+    }
+};
+
+// CONTROLLER
+const controller = {
+    loadHotels: function() {
+        const hotels = model.getHotels();
+        view.render(hotels);
+    }
+};
+</script>
+
+</body>
+</html>
